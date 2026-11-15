@@ -1,0 +1,36 @@
+{
+  "name": { "en": "Fuel price (area)", "nl": "Brandstofprijs (gebied)" },
+  "class": "sensor",
+  "platforms": ["local"],
+  "connectivity": [],
+  "capabilities": [
+    "measure_fuel_price",
+    "fuel_price_average",
+    "fuel_price_lowest_ever",
+    "fuel_price_highest_ever",
+    "fuel_price_change_day",
+    "fuel_price_change_week",
+    "fuel_station_name",
+    "fuel_station_address",
+    "fuel_station_distance",
+    "fuel_station_count"
+  ],
+  "capabilitiesOptions": {
+    "measure_fuel_price": { "title": { "en": "Lowest price", "nl": "Laagste prijs" } },
+    "fuel_price_lowest_ever": { "title": { "en": "Lowest price ever", "nl": "Laagste prijs ooit" } },
+    "fuel_price_highest_ever": { "title": { "en": "Highest price ever", "nl": "Hoogste prijs ooit" } },
+    "fuel_station_name": { "title": { "en": "Cheapest station", "nl": "Goedkoopste station" } },
+    "fuel_station_address": { "title": { "en": "Cheapest station address", "nl": "Adres goedkoopste station" } },
+    "fuel_station_distance": { "title": { "en": "Distance to cheapest station", "nl": "Afstand tot goedkoopste station" } }
+  },
+  "images": {
+    "small": "/drivers/area/assets/images/small.png",
+    "large": "/drivers/area/assets/images/large.png",
+    "xlarge": "/drivers/area/assets/images/xlarge.png"
+  },
+  "pair": [
+    { "id": "address", "navigation": { "next": "list_devices" } },
+    { "id": "list_devices", "template": "list_devices", "navigation": { "next": "add_devices" } },
+    { "id": "add_devices", "template": "add_devices" }
+  ]
+}

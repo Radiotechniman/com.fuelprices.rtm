@@ -1,0 +1,46 @@
+[
+  {
+    "id": "address",
+    "type": "label",
+    "label": {
+      "en": "Location",
+      "nl": "Locatie"
+    },
+    "value": "-"
+  },
+  {
+    "id": "radius",
+    "type": "number",
+    "label": {
+      "en": "Search radius (km)",
+      "nl": "Zoekstraal (km)"
+    },
+    "value": 5,
+    "min": 0.5,
+    "max": 25
+  },
+  {
+    "id": "auto_refresh",
+    "type": "checkbox",
+    "label": {
+      "en": "Refresh automatically",
+      "nl": "Automatisch verversen"
+    },
+    "hint": {
+      "en": "When off, prices only update through the \"Refresh data\" flow card.",
+      "nl": "Als dit uit staat, worden prijzen alleen bijgewerkt via de flowkaart \"Ververs data\"."
+    },
+    "value": true
+  },
+  {
+    "id": "interval",
+    "type": "number",
+    "label": {
+      "en": "Update interval (minutes)",
+      "nl": "Update-interval (minuten)"
+    },
+    "value": 30,
+    "min": 5,
+    "max": 1440
+  }
+]

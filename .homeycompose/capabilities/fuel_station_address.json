@@ -1,0 +1,8 @@
+{
+  "icon": "/assets/location.svg",
+  "type": "string",
+  "title": { "en": "Address", "nl": "Adres" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor"
+}

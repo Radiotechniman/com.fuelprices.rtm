@@ -1,0 +1,10 @@
+{
+  "icon": "/assets/gas-station.svg",
+  "type": "boolean",
+  "title": { "en": "Open", "nl": "Open" },
+  "titleTrue": { "en": "Open", "nl": "Open" },
+  "titleFalse": { "en": "Closed", "nl": "Gesloten" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor"
+}

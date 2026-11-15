@@ -1,0 +1,11 @@
+{
+  "icon": "/assets/count.svg",
+  "type": "number",
+  "title": { "en": "Stations in range", "nl": "Stations in bereik" },
+  "units": { "en": "" },
+  "decimals": 0,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false
+}

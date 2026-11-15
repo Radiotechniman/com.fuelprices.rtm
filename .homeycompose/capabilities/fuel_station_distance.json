@@ -1,0 +1,11 @@
+{
+  "icon": "/assets/distance.svg",
+  "type": "number",
+  "title": { "en": "Distance", "nl": "Afstand" },
+  "units": { "en": "km" },
+  "decimals": 1,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false
+}

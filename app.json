@@ -1,0 +1,822 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.fuelprices.rtm",
+  "version": "1.0.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Fuel Prices",
+    "nl": "Brandstofprijzen"
+  },
+  "description": {
+    "en": "Track fuel prices at the pump in your area or at a specific station. Icons via svgrepo.com.",
+    "nl": "Volg de brandstofprijzen aan de pomp in jouw omgeving of bij een specifiek tankstation. Iconen via svgrepo.com."
+  },
+  "category": [
+    "tools"
+  ],
+  "brandColor": "#1B7F5C",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "radiotechniman"
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "area_cheapest_changed",
+        "title": {
+          "en": "The cheapest station has changed",
+          "nl": "De goedkoopste pomp is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "station",
+            "type": "string",
+            "title": {
+              "en": "Station",
+              "nl": "Station"
+            },
+            "example": "Garage Van Wees"
+          },
+          {
+            "name": "address",
+            "type": "string",
+            "title": {
+              "en": "Address",
+              "nl": "Adres"
+            },
+            "example": "Dorpsstraat 1, Utrecht"
+          },
+          {
+            "name": "price",
+            "type": "number",
+            "title": {
+              "en": "Price",
+              "nl": "Prijs"
+            },
+            "example": 1.899
+          },
+          {
+            "name": "previous_station",
+            "type": "string",
+            "title": {
+              "en": "Previous station",
+              "nl": "Vorig station"
+            },
+            "example": "Tango Centrum"
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=area"
+          }
+        ]
+      },
+      {
+        "id": "area_price_changed",
+        "title": {
+          "en": "Price has changed",
+          "nl": "Prijs is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "price",
+            "type": "number",
+            "title": {
+              "en": "Price",
+              "nl": "Prijs"
+            },
+            "example": 1.899
+          },
+          {
+            "name": "previous_price",
+            "type": "number",
+            "title": {
+              "en": "Previous price",
+              "nl": "Vorige prijs"
+            },
+            "example": 1.919
+          },
+          {
+            "name": "change",
+            "type": "number",
+            "title": {
+              "en": "Change",
+              "nl": "Verschil"
+            },
+            "example": -0.02
+          },
+          {
+            "name": "station",
+            "type": "string",
+            "title": {
+              "en": "Station",
+              "nl": "Station"
+            },
+            "example": "Garage Van Wees"
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=area"
+          }
+        ]
+      },
+      {
+        "id": "area_new_lowest_ever",
+        "title": {
+          "en": "New lowest price ever",
+          "nl": "Nieuwe laagste prijs ooit"
+        },
+        "tokens": [
+          {
+            "name": "price",
+            "type": "number",
+            "title": {
+              "en": "Price",
+              "nl": "Prijs"
+            },
+            "example": 1.899
+          },
+          {
+            "name": "station",
+            "type": "string",
+            "title": {
+              "en": "Station",
+              "nl": "Station"
+            },
+            "example": "Garage Van Wees"
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=area"
+          }
+        ]
+      },
+      {
+        "id": "area_price_drops_below",
+        "title": {
+          "en": "Price drops below",
+          "nl": "Prijs zakt onder"
+        },
+        "titleFormatted": {
+          "en": "Price drops below [[price]]",
+          "nl": "Prijs zakt onder [[price]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=area"
+          },
+          {
+            "name": "price",
+            "type": "number",
+            "min": 0,
+            "step": 0.001,
+            "placeholder": {
+              "en": "1.999",
+              "nl": "1,999"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "price",
+            "type": "number",
+            "title": {
+              "en": "Price",
+              "nl": "Prijs"
+            },
+            "example": 1.899
+          },
+          {
+            "name": "station",
+            "type": "string",
+            "title": {
+              "en": "Station",
+              "nl": "Station"
+            },
+            "example": "Garage Van Wees"
+          }
+        ]
+      },
+      {
+        "id": "station_price_changed",
+        "title": {
+          "en": "Price has changed",
+          "nl": "Prijs is veranderd"
+        },
+        "titleFormatted": {
+          "en": "[[fuel]] price has changed",
+          "nl": "Prijs van [[fuel]] is veranderd"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=station"
+          },
+          {
+            "name": "fuel",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Fuel",
+              "nl": "Brandstof"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "price",
+            "type": "number",
+            "title": {
+              "en": "Price",
+              "nl": "Prijs"
+            },
+            "example": 1.899
+          },
+          {
+            "name": "previous_price",
+            "type": "number",
+            "title": {
+              "en": "Previous price",
+              "nl": "Vorige prijs"
+            },
+            "example": 1.919
+          },
+          {
+            "name": "change",
+            "type": "number",
+            "title": {
+              "en": "Change",
+              "nl": "Verschil"
+            },
+            "example": -0.02
+          },
+          {
+            "name": "fuel",
+            "type": "string",
+            "title": {
+              "en": "Fuel",
+              "nl": "Brandstof"
+            },
+            "example": "Diesel (B7)"
+          }
+        ]
+      },
+      {
+        "id": "station_price_drops_below",
+        "title": {
+          "en": "Price drops below",
+          "nl": "Prijs zakt onder"
+        },
+        "titleFormatted": {
+          "en": "[[fuel]] price drops below [[price]]",
+          "nl": "Prijs van [[fuel]] zakt onder [[price]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=station"
+          },
+          {
+            "name": "fuel",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Fuel",
+              "nl": "Brandstof"
+            }
+          },
+          {
+            "name": "price",
+            "type": "number",
+            "min": 0,
+            "step": 0.001,
+            "placeholder": {
+              "en": "1.999",
+              "nl": "1,999"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "price",
+            "type": "number",
+            "title": {
+              "en": "Price",
+              "nl": "Prijs"
+            },
+            "example": 1.899
+          },
+          {
+            "name": "fuel",
+            "type": "string",
+            "title": {
+              "en": "Fuel",
+              "nl": "Brandstof"
+            },
+            "example": "Diesel (B7)"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "area_price_below",
+        "title": {
+          "en": "Price is below",
+          "nl": "Prijs is lager dan"
+        },
+        "titleFormatted": {
+          "en": "Price is !{{below|above}} [[price]]",
+          "nl": "Prijs is !{{lager dan|hoger dan of gelijk aan}} [[price]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=area"
+          },
+          {
+            "name": "price",
+            "type": "number",
+            "min": 0,
+            "step": 0.001,
+            "placeholder": {
+              "en": "1.999",
+              "nl": "1,999"
+            }
+          }
+        ]
+      },
+      {
+        "id": "station_price_below",
+        "title": {
+          "en": "Price is below",
+          "nl": "Prijs is lager dan"
+        },
+        "titleFormatted": {
+          "en": "[[fuel]] price is !{{below|above}} [[price]]",
+          "nl": "Prijs van [[fuel]] is !{{lager dan|hoger dan of gelijk aan}} [[price]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=station"
+          },
+          {
+            "name": "fuel",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Fuel",
+              "nl": "Brandstof"
+            }
+          },
+          {
+            "name": "price",
+            "type": "number",
+            "min": 0,
+            "step": 0.001,
+            "placeholder": {
+              "en": "1.999",
+              "nl": "1,999"
+            }
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "area_refresh",
+        "title": {
+          "en": "Refresh data",
+          "nl": "Ververs data"
+        },
+        "hint": {
+          "en": "Fetches the latest prices now.",
+          "nl": "Haalt nu de laatste prijzen op."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=area"
+          }
+        ]
+      },
+      {
+        "id": "station_refresh",
+        "title": {
+          "en": "Refresh data",
+          "nl": "Ververs data"
+        },
+        "hint": {
+          "en": "Fetches the latest prices now.",
+          "nl": "Haalt nu de laatste prijzen op."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=station"
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Fuel price (area)",
+        "nl": "Brandstofprijs (gebied)"
+      },
+      "class": "sensor",
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "capabilities": [
+        "measure_fuel_price",
+        "fuel_price_average",
+        "fuel_price_lowest_ever",
+        "fuel_price_highest_ever",
+        "fuel_price_change_day",
+        "fuel_price_change_week",
+        "fuel_station_name",
+        "fuel_station_address",
+        "fuel_station_distance",
+        "fuel_station_count"
+      ],
+      "capabilitiesOptions": {
+        "measure_fuel_price": {
+          "title": {
+            "en": "Lowest price",
+            "nl": "Laagste prijs"
+          }
+        },
+        "fuel_price_lowest_ever": {
+          "title": {
+            "en": "Lowest price ever",
+            "nl": "Laagste prijs ooit"
+          }
+        },
+        "fuel_price_highest_ever": {
+          "title": {
+            "en": "Highest price ever",
+            "nl": "Hoogste prijs ooit"
+          }
+        },
+        "fuel_station_name": {
+          "title": {
+            "en": "Cheapest station",
+            "nl": "Goedkoopste station"
+          }
+        },
+        "fuel_station_address": {
+          "title": {
+            "en": "Cheapest station address",
+            "nl": "Adres goedkoopste station"
+          }
+        },
+        "fuel_station_distance": {
+          "title": {
+            "en": "Distance to cheapest station",
+            "nl": "Afstand tot goedkoopste station"
+          }
+        }
+      },
+      "images": {
+        "small": "/drivers/area/assets/images/small.png",
+        "large": "/drivers/area/assets/images/large.png",
+        "xlarge": "/drivers/area/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "address",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "area",
+      "settings": [
+        {
+          "id": "address",
+          "type": "label",
+          "label": {
+            "en": "Location",
+            "nl": "Locatie"
+          },
+          "value": "-"
+        },
+        {
+          "id": "radius",
+          "type": "number",
+          "label": {
+            "en": "Search radius (km)",
+            "nl": "Zoekstraal (km)"
+          },
+          "value": 5,
+          "min": 0.5,
+          "max": 25
+        },
+        {
+          "id": "auto_refresh",
+          "type": "checkbox",
+          "label": {
+            "en": "Refresh automatically",
+            "nl": "Automatisch verversen"
+          },
+          "hint": {
+            "en": "When off, prices only update through the \"Refresh data\" flow card.",
+            "nl": "Als dit uit staat, worden prijzen alleen bijgewerkt via de flowkaart \"Ververs data\"."
+          },
+          "value": true
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Update interval (minutes)",
+            "nl": "Update-interval (minuten)"
+          },
+          "value": 30,
+          "min": 5,
+          "max": 1440
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Fuel station",
+        "nl": "Tankstation"
+      },
+      "class": "sensor",
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "capabilities": [],
+      "images": {
+        "small": "/drivers/station/assets/images/small.png",
+        "large": "/drivers/station/assets/images/large.png",
+        "xlarge": "/drivers/station/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "address",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "station",
+      "settings": [
+        {
+          "id": "address",
+          "type": "label",
+          "label": {
+            "en": "Address",
+            "nl": "Adres"
+          },
+          "value": "-"
+        },
+        {
+          "id": "auto_refresh",
+          "type": "checkbox",
+          "label": {
+            "en": "Refresh automatically",
+            "nl": "Automatisch verversen"
+          },
+          "hint": {
+            "en": "When off, prices only update through the \"Refresh data\" flow card.",
+            "nl": "Als dit uit staat, worden prijzen alleen bijgewerkt via de flowkaart \"Ververs data\"."
+          },
+          "value": true
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Update interval (minutes)",
+            "nl": "Update-interval (minuten)"
+          },
+          "value": 30,
+          "min": 5,
+          "max": 1440
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "fuel_price_average": {
+      "icon": "/assets/euro.svg",
+      "type": "number",
+      "title": {
+        "en": "Average price",
+        "nl": "Gemiddelde prijs"
+      },
+      "units": {
+        "en": "€/L"
+      },
+      "decimals": 3,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true
+    },
+    "fuel_price_change_day": {
+      "icon": "/assets/euro.svg",
+      "type": "number",
+      "title": {
+        "en": "Change vs. yesterday",
+        "nl": "Verschil met gisteren"
+      },
+      "units": {
+        "en": "€/L"
+      },
+      "decimals": 3,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true
+    },
+    "fuel_price_change_week": {
+      "icon": "/assets/euro.svg",
+      "type": "number",
+      "title": {
+        "en": "Change vs. last week",
+        "nl": "Verschil met vorige week"
+      },
+      "units": {
+        "en": "€/L"
+      },
+      "decimals": 3,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true
+    },
+    "fuel_price_highest_ever": {
+      "icon": "/assets/euro.svg",
+      "type": "number",
+      "title": {
+        "en": "Highest ever",
+        "nl": "Hoogste ooit"
+      },
+      "units": {
+        "en": "€/L"
+      },
+      "decimals": 3,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "fuel_price_lowest_ever": {
+      "icon": "/assets/euro.svg",
+      "type": "number",
+      "title": {
+        "en": "Lowest ever",
+        "nl": "Laagste ooit"
+      },
+      "units": {
+        "en": "€/L"
+      },
+      "decimals": 3,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "fuel_station_address": {
+      "icon": "/assets/location.svg",
+      "type": "string",
+      "title": {
+        "en": "Address",
+        "nl": "Adres"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "fuel_station_count": {
+      "icon": "/assets/count.svg",
+      "type": "number",
+      "title": {
+        "en": "Stations in range",
+        "nl": "Stations in bereik"
+      },
+      "units": {
+        "en": ""
+      },
+      "decimals": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "fuel_station_distance": {
+      "icon": "/assets/distance.svg",
+      "type": "number",
+      "title": {
+        "en": "Distance",
+        "nl": "Afstand"
+      },
+      "units": {
+        "en": "km"
+      },
+      "decimals": 1,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false
+    },
+    "fuel_station_name": {
+      "icon": "/assets/streetsign.svg",
+      "type": "string",
+      "title": {
+        "en": "Station",
+        "nl": "Station"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "fuel_station_open": {
+      "icon": "/assets/gas-station.svg",
+      "type": "boolean",
+      "title": {
+        "en": "Open",
+        "nl": "Open"
+      },
+      "titleTrue": {
+        "en": "Open",
+        "nl": "Open"
+      },
+      "titleFalse": {
+        "en": "Closed",
+        "nl": "Gesloten"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
+    "measure_fuel_price": {
+      "icon": "/assets/euro.svg",
+      "type": "number",
+      "title": {
+        "en": "Fuel price",
+        "nl": "Brandstofprijs"
+      },
+      "units": {
+        "en": "€/L"
+      },
+      "decimals": 3,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true
+    }
+  }
+}

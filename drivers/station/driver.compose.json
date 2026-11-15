@@ -1,0 +1,17 @@
+{
+  "name": { "en": "Fuel station", "nl": "Tankstation" },
+  "class": "sensor",
+  "platforms": ["local"],
+  "connectivity": [],
+  "capabilities": [],
+  "images": {
+    "small": "/drivers/station/assets/images/small.png",
+    "large": "/drivers/station/assets/images/large.png",
+    "xlarge": "/drivers/station/assets/images/xlarge.png"
+  },
+  "pair": [
+    { "id": "address", "navigation": { "next": "list_devices" } },
+    { "id": "list_devices", "template": "list_devices", "navigation": { "next": "add_devices" } },
+    { "id": "add_devices", "template": "add_devices" }
+  ]
+}

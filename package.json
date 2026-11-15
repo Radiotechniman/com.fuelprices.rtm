@@ -1,0 +1,6 @@
+{
+  "name": "com.fuelprices.rtm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Homey app that tracks fuel prices from the ANWB points-of-interest API"
+}

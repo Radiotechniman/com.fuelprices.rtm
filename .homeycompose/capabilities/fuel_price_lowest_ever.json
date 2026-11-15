@@ -1,0 +1,11 @@
+{
+  "icon": "/assets/euro.svg",
+  "type": "number",
+  "title": { "en": "Lowest ever", "nl": "Laagste ooit" },
+  "units": { "en": "€/L" },
+  "decimals": 3,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false
+}

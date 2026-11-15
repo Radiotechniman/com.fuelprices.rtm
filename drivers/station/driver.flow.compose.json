@@ -1,0 +1,160 @@
+{
+  "triggers": [
+    {
+      "id": "station_price_changed",
+      "title": {
+        "en": "Price has changed",
+        "nl": "Prijs is veranderd"
+      },
+      "titleFormatted": {
+        "en": "[[fuel]] price has changed",
+        "nl": "Prijs van [[fuel]] is veranderd"
+      },
+      "args": [
+        {
+          "name": "fuel",
+          "type": "autocomplete",
+          "placeholder": {
+            "en": "Fuel",
+            "nl": "Brandstof"
+          }
+        }
+      ],
+      "tokens": [
+        {
+          "name": "price",
+          "type": "number",
+          "title": {
+            "en": "Price",
+            "nl": "Prijs"
+          },
+          "example": 1.899
+        },
+        {
+          "name": "previous_price",
+          "type": "number",
+          "title": {
+            "en": "Previous price",
+            "nl": "Vorige prijs"
+          },
+          "example": 1.919
+        },
+        {
+          "name": "change",
+          "type": "number",
+          "title": {
+            "en": "Change",
+            "nl": "Verschil"
+          },
+          "example": -0.02
+        },
+        {
+          "name": "fuel",
+          "type": "string",
+          "title": {
+            "en": "Fuel",
+            "nl": "Brandstof"
+          },
+          "example": "Diesel (B7)"
+        }
+      ]
+    },
+    {
+      "id": "station_price_drops_below",
+      "title": {
+        "en": "Price drops below",
+        "nl": "Prijs zakt onder"
+      },
+      "titleFormatted": {
+        "en": "[[fuel]] price drops below [[price]]",
+        "nl": "Prijs van [[fuel]] zakt onder [[price]]"
+      },
+      "args": [
+        {
+          "name": "fuel",
+          "type": "autocomplete",
+          "placeholder": {
+            "en": "Fuel",
+            "nl": "Brandstof"
+          }
+        },
+        {
+          "name": "price",
+          "type": "number",
+          "min": 0,
+          "step": 0.001,
+          "placeholder": {
+            "en": "1.999",
+            "nl": "1,999"
+          }
+        }
+      ],
+      "tokens": [
+        {
+          "name": "price",
+          "type": "number",
+          "title": {
+            "en": "Price",
+            "nl": "Prijs"
+          },
+          "example": 1.899
+        },
+        {
+          "name": "fuel",
+          "type": "string",
+          "title": {
+            "en": "Fuel",
+            "nl": "Brandstof"
+          },
+          "example": "Diesel (B7)"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "station_price_below",
+      "title": {
+        "en": "Price is below",
+        "nl": "Prijs is lager dan"
+      },
+      "titleFormatted": {
+        "en": "[[fuel]] price is !{{below|above}} [[price]]",
+        "nl": "Prijs van [[fuel]] is !{{lager dan|hoger dan of gelijk aan}} [[price]]"
+      },
+      "args": [
+        {
+          "name": "fuel",
+          "type": "autocomplete",
+          "placeholder": {
+            "en": "Fuel",
+            "nl": "Brandstof"
+          }
+        },
+        {
+          "name": "price",
+          "type": "number",
+          "min": 0,
+          "step": 0.001,
+          "placeholder": {
+            "en": "1.999",
+            "nl": "1,999"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "station_refresh",
+      "title": {
+        "en": "Refresh data",
+        "nl": "Ververs data"
+      },
+      "hint": {
+        "en": "Fetches the latest prices now.",
+        "nl": "Haalt nu de laatste prijzen op."
+      }
+    }
+  ]
+}
