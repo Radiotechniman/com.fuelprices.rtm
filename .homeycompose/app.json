@@ -1,0 +1,21 @@
+{
+  "id": "com.fuelprices.rtm",
+  "version": "1.0.0",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "platforms": ["local"],
+  "name": { "en": "Fuel Prices", "nl": "Brandstofprijzen" },
+  "description": {
+    "en": "Track fuel prices at the pump in your area or at a specific station. Icons via svgrepo.com.",
+    "nl": "Volg de brandstofprijzen aan de pomp in jouw omgeving of bij een specifiek tankstation. Iconen via svgrepo.com."
+  },
+  "category": ["tools"],
+  "brandColor": "#1B7F5C",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": { "name": "radiotechniman" }
+}

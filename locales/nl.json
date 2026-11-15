@@ -1,0 +1,20 @@
+{
+  "pair": {
+    "title": "Locatie",
+    "intro": "Voer een adres, postcode of plaats in. Laat leeg om de locatie van je Homey te gebruiken.",
+    "address": "Adres",
+    "address_placeholder": "bijv. Zevenend 35, Laren",
+    "radius": "Zoekstraal (km)",
+    "search": "Zoeken",
+    "found": "Gevonden:",
+    "next": "Volgende",
+    "home_location": "Homey-locatie",
+    "no_home": "De locatie van je Homey is niet ingesteld.",
+    "not_found": "Adres niet gevonden.",
+    "no_location": "Kies eerst een locatie.",
+    "no_stations": "Geen tankstations gevonden binnen de straal."
+  },
+  "error": {
+    "no_stations": "Geen tankstations binnen de straal"
+  }
+}

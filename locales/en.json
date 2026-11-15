@@ -1,0 +1,20 @@
+{
+  "pair": {
+    "title": "Location",
+    "intro": "Enter an address, postal code or town. Leave empty to use your Homey's location.",
+    "address": "Address",
+    "address_placeholder": "e.g. Zevenend 35, Laren",
+    "radius": "Search radius (km)",
+    "search": "Search",
+    "found": "Found:",
+    "next": "Next",
+    "home_location": "Homey location",
+    "no_home": "Your Homey's location is not set.",
+    "not_found": "Address not found.",
+    "no_location": "Choose a location first.",
+    "no_stations": "No fuel stations found within the radius."
+  },
+  "error": {
+    "no_stations": "No fuel stations within the radius"
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "triggers": [
+    {
+      "id": "area_cheapest_changed",
+      "title": {
+        "en": "The cheapest station has changed",
+        "nl": "De goedkoopste pomp is veranderd"
+      },
+      "tokens": [
+        {
+          "name": "station",
+          "type": "string",
+          "title": {
+            "en": "Station",
+            "nl": "Station"
+          },
+          "example": "Garage Van Wees"
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "title": {
+            "en": "Address",
+            "nl": "Adres"
+          },
+          "example": "Dorpsstraat 1, Utrecht"
+        },
+        {
+          "name": "price",
+          "type": "number",
+          "title": {
+            "en": "Price",
+            "nl": "Prijs"
+          },
+          "example": 1.899
+        },
+        {
+          "name": "previous_station",
+          "type": "string",
+          "title": {
+            "en": "Previous station",
+            "nl": "Vorig station"
+          },
+          "example": "Tango Centrum"
+        }
+      ]
+    },
+    {
+      "id": "area_price_changed",
+      "title": {
+        "en": "Price has changed",
+        "nl": "Prijs is veranderd"
+      },
+      "tokens": [
+        {
+          "name": "price",
+          "type": "number",
+          "title": {
+            "en": "Price",
+            "nl": "Prijs"
+          },
+          "example": 1.899
+        },
+        {
+          "name": "previous_price",
+          "type": "number",
+          "title": {
+            "en": "Previous price",
+            "nl": "Vorige prijs"
+          },
+          "example": 1.919
+        },
+        {
+          "name": "change",
+          "type": "number",
+          "title": {
+            "en": "Change",
+            "nl": "Verschil"
+          },
+          "example": -0.02
+        },
+        {
+          "name": "station",
+          "type": "string",
+          "title": {
+            "en": "Station",
+            "nl": "Station"
+          },
+          "example": "Garage Van Wees"
+        }
+      ]
+    },
+    {
+      "id": "area_new_lowest_ever",
+      "title": {
+        "en": "New lowest price ever",
+        "nl": "Nieuwe laagste prijs ooit"
+      },
+      "tokens": [
+        {
+          "name": "price",
+          "type": "number",
+          "title": {
+            "en": "Price",
+            "nl": "Prijs"
+          },
+          "example": 1.899
+        },
+        {
+          "name": "station",
+          "type": "string",
+          "title": {
+            "en": "Station",
+            "nl": "Station"
+          },
+          "example": "Garage Van Wees"
+        }
+      ]
+    },
+    {
+      "id": "area_price_drops_below",
+      "title": {
+        "en": "Price drops below",
+        "nl": "Prijs zakt onder"
+      },
+      "titleFormatted": {
+        "en": "Price drops below [[price]]",
+        "nl": "Prijs zakt onder [[price]]"
+      },
+      "args": [
+        {
+          "name": "price",
+          "type": "number",
+          "min": 0,
+          "step": 0.001,
+          "placeholder": {
+            "en": "1.999",
+            "nl": "1,999"
+          }
+        }
+      ],
+      "tokens": [
+        {
+          "name": "price",
+          "type": "number",
+          "title": {
+            "en": "Price",
+            "nl": "Prijs"
+          },
+          "example": 1.899
+        },
+        {
+          "name": "station",
+          "type": "string",
+          "title": {
+            "en": "Station",
+            "nl": "Station"
+          },
+          "example": "Garage Van Wees"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "area_price_below",
+      "title": {
+        "en": "Price is below",
+        "nl": "Prijs is lager dan"
+      },
+      "titleFormatted": {
+        "en": "Price is !{{below|above}} [[price]]",
+        "nl": "Prijs is !{{lager dan|hoger dan of gelijk aan}} [[price]]"
+      },
+      "args": [
+        {
+          "name": "price",
+          "type": "number",
+          "min": 0,
+          "step": 0.001,
+          "placeholder": {
+            "en": "1.999",
+            "nl": "1,999"
+          }
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "area_refresh",
+      "title": {
+        "en": "Refresh data",
+        "nl": "Ververs data"
+      },
+      "hint": {
+        "en": "Fetches the latest prices now.",
+        "nl": "Haalt nu de laatste prijzen op."
+      }
+    }
+  ]
+}

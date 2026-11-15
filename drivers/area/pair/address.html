@@ -1,0 +1,63 @@
+<style>
+  .field { margin-bottom: 1em; }
+  label { display: block; margin-bottom: .25em; }
+  input { width: 100%; box-sizing: border-box; font-size: 1em; padding: .5em; }
+  button { font-size: 1em; padding: .5em 1em; }
+  #result, #error { margin-top: 1em; }
+  #error { color: #d33; }
+</style>
+
+<p data-i18n="pair.intro"></p>
+
+<div class="field">
+  <label for="query" data-i18n="pair.address"></label>
+  <input id="query" type="text" autocomplete="off">
+</div>
+<div class="field">
+  <label for="radius" data-i18n="pair.radius"></label>
+  <input id="radius" type="number" value="5" min="0.5" max="25" step="0.5">
+</div>
+
+<button id="search" class="hy-button-primary" data-i18n="pair.search"></button>
+<button id="next" class="hy-button-primary" data-i18n="pair.next" style="display: none"></button>
+
+<div id="result"></div>
+<div id="error"></div>
+
+<script type="application/javascript">
+  Homey.setTitle(Homey.__('pair.title'));
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    el.textContent = Homey.__(el.getAttribute('data-i18n'));
+  });
+  document.getElementById('query').placeholder = Homey.__('pair.address_placeholder');
+
+  var searchBtn = document.getElementById('search');
+  var nextBtn = document.getElementById('next');
+  var result = document.getElementById('result');
+  var error = document.getElementById('error');
+
+  function search() {
+    error.textContent = '';
+    result.textContent = '';
+    nextBtn.style.display = 'none';
+    searchBtn.disabled = true;
+    Homey.emit('geocode', {
+      query: document.getElementById('query').value,
+      radius: document.getElementById('radius').value
+    }, function (err, res) {
+      searchBtn.disabled = false;
+      if (err) {
+        error.textContent = err.message || String(err);
+        return;
+      }
+      result.textContent = Homey.__('pair.found') + ' ' + res.label;
+      nextBtn.style.display = '';
+    });
+  }
+
+  searchBtn.addEventListener('click', search);
+  document.getElementById('query').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') search();
+  });
+  nextBtn.addEventListener('click', function () { Homey.nextView(); });
+</script>

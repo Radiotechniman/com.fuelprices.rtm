@@ -1,0 +1,8 @@
+{
+  "icon": "/assets/streetsign.svg",
+  "type": "string",
+  "title": { "en": "Station", "nl": "Station" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor"
+}
