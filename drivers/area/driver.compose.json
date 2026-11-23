@@ -13,7 +13,8 @@
     "fuel_station_name",
     "fuel_station_address",
     "fuel_station_distance",
-    "fuel_station_count"
+    "fuel_station_count",
+    "fuel_last_update"
   ],
   "capabilitiesOptions": {
     "measure_fuel_price": { "title": { "en": "Lowest price", "nl": "Laagste prijs" } },

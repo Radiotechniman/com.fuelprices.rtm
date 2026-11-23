@@ -1,0 +1,8 @@
+{
+  "icon": "/assets/icon.svg",
+  "type": "string",
+  "title": { "en": "Last updated", "nl": "Laatst bijgewerkt" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor"
+}

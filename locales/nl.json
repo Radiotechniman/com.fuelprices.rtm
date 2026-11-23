@@ -15,6 +15,28 @@
     "no_stations": "Geen tankstations gevonden binnen de straal."
   },
   "error": {
-    "no_stations": "Geen tankstations binnen de straal"
+    "no_stations": "Geen tankstations binnen de straal",
+    "interval": "Het interval moet 0 (app-standaard) of minimaal 5 minuten zijn."
+  },
+  "settings": {
+    "refresh": "Verversen",
+    "default_interval": "Standaard update-interval (minuten)",
+    "interval_hint": "Geldt voor elk device waarvan het interval op 0 staat. Een device kan dit in de eigen instellingen overschrijven.",
+    "save": "Opslaan",
+    "saved": "Opgeslagen",
+    "invalid": "Vul 5-1440 in",
+    "device": "Device",
+    "interval": "Interval",
+    "manual": "Alleen handmatig",
+    "own": "eigen instelling",
+    "log": "Activiteitenlog",
+    "last_ok": "Laatste geslaagde refresh",
+    "errors": "Fouten",
+    "time": "Tijd",
+    "result": "Resultaat",
+    "duration": "Duur",
+    "info": "Info",
+    "error": "Fout",
+    "clear": "Log wissen"
   }
 }

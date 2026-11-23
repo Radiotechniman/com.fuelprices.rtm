@@ -28,6 +28,12 @@
   "author": {
     "name": "radiotechniman"
   },
+  "api": {
+    "getStatus": {
+      "method": "GET",
+      "path": "/status"
+    }
+  },
   "flow": {
     "triggers": [
       {
@@ -463,7 +469,8 @@
         "fuel_station_name",
         "fuel_station_address",
         "fuel_station_distance",
-        "fuel_station_count"
+        "fuel_station_count",
+        "fuel_last_update"
       ],
       "capabilitiesOptions": {
         "measure_fuel_price": {
@@ -569,8 +576,12 @@
             "en": "Update interval (minutes)",
             "nl": "Update-interval (minuten)"
           },
-          "value": 30,
-          "min": 5,
+          "hint": {
+            "en": "0 = use the default interval from the app settings. Otherwise 5-1440.",
+            "nl": "0 = gebruik het standaard interval uit de app-instellingen. Anders 5-1440."
+          },
+          "value": 0,
+          "min": 0,
           "max": 1440
         }
       ]
@@ -641,14 +652,29 @@
             "en": "Update interval (minutes)",
             "nl": "Update-interval (minuten)"
           },
-          "value": 30,
-          "min": 5,
+          "hint": {
+            "en": "0 = use the default interval from the app settings. Otherwise 5-1440.",
+            "nl": "0 = gebruik het standaard interval uit de app-instellingen. Anders 5-1440."
+          },
+          "value": 0,
+          "min": 0,
           "max": 1440
         }
       ]
     }
   ],
   "capabilities": {
+    "fuel_last_update": {
+      "icon": "/assets/icon.svg",
+      "type": "string",
+      "title": {
+        "en": "Last updated",
+        "nl": "Laatst bijgewerkt"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
     "fuel_price_average": {
       "icon": "/assets/euro.svg",
       "type": "number",

@@ -2,6 +2,7 @@
 
 const Homey = require('homey');
 const { fetchStations } = require('../../lib/anwb');
+const { formatStamp } = require('../../lib/time');
 const { DAY, WEEK, record, priceAgo, round3 } = require('../../lib/history');
 
 module.exports = class AreaDevice extends Homey.Device {
@@ -13,20 +14,32 @@ module.exports = class AreaDevice extends Homey.Device {
   async onInit() {
     this.log('[pair-debug] onInit', this.getName());
     this.timer = null;
-    this.schedule({ auto_refresh: this.getSetting('auto_refresh'), interval: this.getSetting('interval') });
+    if (!this.hasCapability('fuel_last_update')) await this.addCapability('fuel_last_update');
+    this.reschedule();
     // Not awaited: a slow first request must not keep the device (and the pairing screen) waiting.
     this.refresh().catch(this.error);
   }
 
-  schedule({ auto_refresh: auto, interval }) {
+  reschedule() {
     if (this.timer) this.homey.clearInterval(this.timer);
     this.timer = null;
-    if (auto === false) return;
-    this.timer = this.homey.setInterval(() => this.refresh(), interval * 60 * 1000);
+    this.intervalMinutes = null;
+    if (this.getSetting('auto_refresh') === false) return;
+    this.intervalMinutes = this.homey.app.effectiveInterval(this.getSetting('interval'));
+    this.timer = this.homey.setInterval(() => this.refresh(), this.intervalMinutes * 60 * 1000);
+  }
+
+  getScheduleInfo() {
+    return { name: this.getName(), intervalMinutes: this.intervalMinutes, custom: this.getSetting('interval') > 0 };
   }
 
   async onSettings({ newSettings, changedKeys }) {
-    if (changedKeys.includes('interval') || changedKeys.includes('auto_refresh')) this.schedule(newSettings);
+    const interval = newSettings.interval;
+    if (interval > 0 && interval < 5) throw new Error(this.homey.__('error.interval'));
+    if (changedKeys.includes('interval') || changedKeys.includes('auto_refresh')) {
+      // The new values are only readable through getSetting after this handler returns.
+      this.homey.setTimeout(() => this.reschedule(), 0);
+    }
     if (changedKeys.includes('radius')) {
       this.homey.setTimeout(() => this.refresh().catch(this.error), 0);
     }
@@ -39,6 +52,7 @@ module.exports = class AreaDevice extends Homey.Device {
   // The flow action passes throwOnError so a failed refresh shows up in the flow instead of only as a warning.
   async refresh({ throwOnError = false } = {}) {
     const { fuelType, lat, lon } = this.getStore();
+    const started = Date.now();
     try {
       const stations = await fetchStations({
         lat, lon, radiusKm: this.getSetting('radius'), fuelType,
@@ -46,12 +60,20 @@ module.exports = class AreaDevice extends Homey.Device {
       const priced = stations.filter(s => typeof s.prices[fuelType] === 'number');
       if (priced.length === 0) {
         await this.setWarning(this.homey.__('error.no_stations'));
+        this.homey.app.logRefresh({ device: this.getName(), ok: false, ms: Date.now() - started, detail: 'no stations' });
         return;
       }
       await this.unsetWarning();
       await this.update(priced, fuelType);
+      this.homey.app.logRefresh({
+        device: this.getName(),
+        ok: true,
+        ms: Date.now() - started,
+        detail: `${priced.length} stations, lowest ${this.getCapabilityValue('measure_fuel_price')}`,
+      });
     } catch (err) {
       this.error('Refresh failed:', err.message);
+      this.homey.app.logRefresh({ device: this.getName(), ok: false, ms: Date.now() - started, detail: err.message });
       await this.setWarning(err.message);
       if (throwOnError) throw err;
     }
@@ -88,6 +110,7 @@ module.exports = class AreaDevice extends Homey.Device {
       this.setCapabilityValue('fuel_station_address', cheapest.address),
       this.setCapabilityValue('fuel_station_distance', Math.round(cheapest.distanceKm * 10) / 10),
       this.setCapabilityValue('fuel_station_count', priced.length),
+      this.setCapabilityValue('fuel_last_update', formatStamp(new Date(now), this.homey.clock.getTimezone())),
     ]);
 
     const previousCheapest = this.getStoreValue('cheapest');
