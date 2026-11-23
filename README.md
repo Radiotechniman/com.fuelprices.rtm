@@ -9,7 +9,9 @@ A [Homey](https://homey.app) app (SDK 3, `com.fuelprices.rtm`) that tracks fuel 
 
 Both device types come with Flow cards (price changed, price drops below a value, new lowest price ever, cheapest station changed, refresh data) and a configurable update interval. See [README.txt](README.txt) for the full list.
 
-## Installation
+## Installation from source
+
+Once published, the app can be installed from the Homey App Store. The steps below are only for installing it from this repository.
 
 Requires the [Homey CLI](https://apps.developer.homey.app/the-basics/getting-started):
 
