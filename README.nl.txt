@@ -1,5 +1,7 @@
 Volg de brandstofprijzen aan de pomp, voor jouw omgeving of bij een specifiek tankstation.
 
+LET OP: deze app werkt voorlopig alleen in Nederland. Prijzen en adressen zijn alleen beschikbaar voor Nederlandse tankstations.
+
 DEVICES
 
 Brandstofprijs (gebied)

@@ -1,5 +1,7 @@
 Track fuel prices at the pump, either for your area or for a specific station.
 
+NOTE: this app currently only works in the Netherlands. Prices and addresses are only available for Dutch fuel stations.
+
 DEVICES
 
 Fuel price (area)

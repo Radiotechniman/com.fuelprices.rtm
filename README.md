@@ -1,6 +1,10 @@
 # Fuel Prices for Homey
 
-A [Homey](https://homey.app) app (SDK 3, `com.fuelprices.rtm`) that tracks fuel prices at the pump in the Netherlands, either for your area or for a specific station. 🇳🇱 *Nederlandse beschrijving: zie [README.nl.txt](README.nl.txt).*
+A [Homey](https://homey.app) app (SDK 3, `com.fuelprices.rtm`) that tracks fuel prices at the pump, either for your area or for a specific station.
+
+> **🇳🇱 Netherlands only (for now).** Prices come from a Dutch source and addresses are looked up in the Dutch PDOK Locatieserver, so the app only works for stations and addresses in the Netherlands.
+
+*Nederlandse beschrijving: zie [README.nl.txt](README.nl.txt).*
 
 ## Devices
 
