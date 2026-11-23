@@ -15,6 +15,28 @@
     "no_stations": "No fuel stations found within the radius."
   },
   "error": {
-    "no_stations": "No fuel stations within the radius"
+    "no_stations": "No fuel stations within the radius",
+    "interval": "The interval must be 0 (app default) or at least 5 minutes."
+  },
+  "settings": {
+    "refresh": "Refresh",
+    "default_interval": "Default update interval (minutes)",
+    "interval_hint": "Used by every device that has its interval set to 0. A device can override this in its own settings.",
+    "save": "Save",
+    "saved": "Saved",
+    "invalid": "Enter 5-1440",
+    "device": "Device",
+    "interval": "Interval",
+    "manual": "Manual only",
+    "own": "own setting",
+    "log": "Activity log",
+    "last_ok": "Last successful refresh",
+    "errors": "Errors",
+    "time": "Time",
+    "result": "Result",
+    "duration": "Duration",
+    "info": "Info",
+    "error": "Error",
+    "clear": "Clear log"
   }
 }

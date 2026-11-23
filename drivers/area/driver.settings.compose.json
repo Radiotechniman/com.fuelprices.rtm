@@ -39,8 +39,12 @@
       "en": "Update interval (minutes)",
       "nl": "Update-interval (minuten)"
     },
-    "value": 30,
-    "min": 5,
+    "hint": {
+      "en": "0 = use the default interval from the app settings. Otherwise 5-1440.",
+      "nl": "0 = gebruik het standaard interval uit de app-instellingen. Anders 5-1440."
+    },
+    "value": 0,
+    "min": 0,
     "max": 1440
   }
 ]
