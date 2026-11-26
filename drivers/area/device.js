@@ -7,26 +7,28 @@ const { DAY, WEEK, record, priceAgo, round3 } = require('../../lib/history');
 
 module.exports = class AreaDevice extends Homey.Device {
 
-  async onAdded() {
-    this.log('[pair-debug] onAdded', this.getName());
-  }
-
   async onInit() {
-    this.log('[pair-debug] onInit', this.getName());
     this.timer = null;
+    this.deleted = false;
     if (!this.hasCapability('fuel_last_update')) await this.addCapability('fuel_last_update');
     this.reschedule();
-    // Not awaited: a slow first request must not keep the device (and the pairing screen) waiting.
-    this.refresh().catch(this.error);
+    // Respect auto_refresh=false on app restarts; a newly added device defaults to auto_refresh=true.
+    if (this.getSetting('auto_refresh') !== false) {
+      // Not awaited: a slow first request must not keep the device (and the pairing screen) waiting.
+      this.refresh().catch(this.error);
+    }
   }
 
-  reschedule() {
+  reschedule(settings = this.getSettings()) {
     if (this.timer) this.homey.clearInterval(this.timer);
     this.timer = null;
     this.intervalMinutes = null;
-    if (this.getSetting('auto_refresh') === false) return;
-    this.intervalMinutes = this.homey.app.effectiveInterval(this.getSetting('interval'));
-    this.timer = this.homey.setInterval(() => this.refresh(), this.intervalMinutes * 60 * 1000);
+    if (settings.auto_refresh === false) return;
+    this.intervalMinutes = this.homey.app.effectiveInterval(settings.interval);
+    this.timer = this.homey.setInterval(
+      () => this.refresh().catch(this.error),
+      this.intervalMinutes * 60 * 1000,
+    );
   }
 
   getScheduleInfo() {
@@ -34,29 +36,39 @@ module.exports = class AreaDevice extends Homey.Device {
   }
 
   async onSettings({ newSettings, changedKeys }) {
-    const interval = newSettings.interval;
+    const interval = Number(newSettings.interval);
     if (interval > 0 && interval < 5) throw new Error(this.homey.__('error.interval'));
     if (changedKeys.includes('interval') || changedKeys.includes('auto_refresh')) {
-      // The new values are only readable through getSetting after this handler returns.
-      this.homey.setTimeout(() => this.reschedule(), 0);
+      // Use newSettings directly so we don't race against Homey persisting settings.
+      this.reschedule(newSettings);
     }
-    if (changedKeys.includes('radius')) {
-      this.homey.setTimeout(() => this.refresh().catch(this.error), 0);
+    if (changedKeys.includes('radius') && newSettings.auto_refresh !== false) {
+      this.refresh({ radius: newSettings.radius }).catch(this.error);
     }
+  }
+
+  async onUninit() {
+    if (this.timer) this.homey.clearInterval(this.timer);
+    this.timer = null;
   }
 
   async onDeleted() {
+    this.deleted = true;
     if (this.timer) this.homey.clearInterval(this.timer);
+    this.timer = null;
   }
 
   // The flow action passes throwOnError so a failed refresh shows up in the flow instead of only as a warning.
-  async refresh({ throwOnError = false } = {}) {
+  async refresh({ throwOnError = false, radius } = {}) {
+    if (this.deleted) return;
     const { fuelType, lat, lon } = this.getStore();
+    const radiusKm = radius ?? this.getSetting('radius');
     const started = Date.now();
     try {
       const stations = await fetchStations({
-        lat, lon, radiusKm: this.getSetting('radius'), fuelType,
+        lat, lon, radiusKm, fuelType,
       });
+      if (this.deleted) return;
       const priced = stations.filter(s => typeof s.prices[fuelType] === 'number');
       if (priced.length === 0) {
         await this.setWarning(this.homey.__('error.no_stations'));
@@ -72,9 +84,10 @@ module.exports = class AreaDevice extends Homey.Device {
         detail: `${priced.length} stations, lowest ${this.getCapabilityValue('measure_fuel_price')}`,
       });
     } catch (err) {
+      if (this.deleted) return;
       this.error('Refresh failed:', err.message);
       this.homey.app.logRefresh({ device: this.getName(), ok: false, ms: Date.now() - started, detail: err.message });
-      await this.setWarning(err.message);
+      await this.setWarning(err.message).catch(this.error);
       if (throwOnError) throw err;
     }
   }

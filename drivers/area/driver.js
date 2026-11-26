@@ -11,7 +11,8 @@ module.exports = class AreaDriver extends Homey.Driver {
     this.homey.flow.getConditionCard('area_price_below')
       .registerRunListener(({ device, price }) => {
         const current = device.getCapabilityValue('measure_fuel_price');
-        return current != null && current < price;
+        if (current == null) throw new Error(this.homey.__('error.no_price'));
+        return current < price;
       });
 
     this.homey.flow.getActionCard('area_refresh')
@@ -27,9 +28,7 @@ module.exports = class AreaDriver extends Homey.Driver {
 
     session.setHandler('list_devices', async () => {
       const { lat, lon, radiusKm, label: place } = getLocation();
-      this.log('[pair-debug] list_devices start', place, radiusKm);
       const stations = await fetchStations({ lat, lon, radiusKm });
-      this.log('[pair-debug] list_devices stations', stations.length);
 
       const fuels = new Map();
       stations.forEach(s => {

@@ -16,7 +16,8 @@ module.exports = class StationDriver extends Homey.Driver {
     condition.registerArgumentAutocompleteListener('fuel', fuelOptions);
     condition.registerRunListener(({ device, fuel, price }) => {
       const current = device.getCapabilityValue(`measure_fuel_price.${subId(fuel.id)}`);
-      return current != null && current < price;
+      if (current == null) throw new Error(this.homey.__('error.no_price'));
+      return current < price;
     });
 
     this.homey.flow.getActionCard('station_refresh')
@@ -37,10 +38,8 @@ module.exports = class StationDriver extends Homey.Driver {
 
     session.setHandler('list_devices', async () => {
       const { lat, lon, radiusKm } = getLocation();
-      this.log('[pair-debug] list_devices start', radiusKm);
       const stations = (await fetchStations({ lat, lon, radiusKm }))
         .filter(s => Object.keys(s.prices).length > 0);
-      this.log('[pair-debug] list_devices stations', stations.length);
       if (stations.length === 0) throw new Error(this.homey.__('pair.no_stations'));
 
       return stations.map(s => {
@@ -59,7 +58,7 @@ module.exports = class StationDriver extends Homey.Driver {
             title: { en: `${f.label} highest ever`, nl: `${f.label} hoogste ooit` },
           };
         });
-        capabilities.push('fuel_station_address');
+        capabilities.push('fuel_station_address', 'fuel_last_update');
         return {
           name: `${s.title} (${s.city}, ${s.distanceKm.toFixed(1)} km)`,
           data: { id: s.id },

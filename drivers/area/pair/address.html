@@ -55,9 +55,19 @@
     });
   }
 
+  function invalidate() {
+    nextBtn.style.display = 'none';
+    result.textContent = '';
+    error.textContent = '';
+  }
+
   searchBtn.addEventListener('click', search);
-  document.getElementById('query').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') search();
+  ['query', 'radius'].forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('input', invalidate);
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') search();
+    });
   });
   nextBtn.addEventListener('click', function () { Homey.nextView(); });
 </script>

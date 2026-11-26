@@ -16,6 +16,7 @@
   },
   "error": {
     "no_stations": "No fuel stations within the radius",
+    "no_price": "No price available yet.",
     "interval": "The interval must be 0 (app default) or at least 5 minutes."
   },
   "settings": {

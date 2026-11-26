@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.fuelprices.rtm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=12.4.0",
   "sdk": 3,
   "platforms": [
@@ -28,10 +28,15 @@
   "author": {
     "name": "radiotechniman"
   },
+  "homeyCommunityTopicId": 162606,
   "api": {
     "getStatus": {
       "method": "GET",
       "path": "/status"
+    },
+    "clearLog": {
+      "method": "DELETE",
+      "path": "/log"
     }
   },
   "flow": {
@@ -351,7 +356,7 @@
           "nl": "Prijs is lager dan"
         },
         "titleFormatted": {
-          "en": "Price is !{{below|above}} [[price]]",
+          "en": "Price is !{{below|at or above}} [[price]]",
           "nl": "Prijs is !{{lager dan|hoger dan of gelijk aan}} [[price]]"
         },
         "args": [
@@ -379,7 +384,7 @@
           "nl": "Prijs is lager dan"
         },
         "titleFormatted": {
-          "en": "[[fuel]] price is !{{below|above}} [[price]]",
+          "en": "[[fuel]] price is !{{below|at or above}} [[price]]",
           "nl": "Prijs van [[fuel]] is !{{lager dan|hoger dan of gelijk aan}} [[price]]"
         },
         "args": [
@@ -772,9 +777,6 @@
       "title": {
         "en": "Stations in range",
         "nl": "Stations in bereik"
-      },
-      "units": {
-        "en": ""
       },
       "decimals": 0,
       "getable": true,

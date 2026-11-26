@@ -16,6 +16,7 @@
   },
   "error": {
     "no_stations": "Geen tankstations binnen de straal",
+    "no_price": "Nog geen prijs beschikbaar.",
     "interval": "Het interval moet 0 (app-standaard) of minimaal 5 minuten zijn."
   },
   "settings": {

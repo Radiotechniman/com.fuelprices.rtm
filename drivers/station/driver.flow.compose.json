@@ -119,7 +119,7 @@
         "nl": "Prijs is lager dan"
       },
       "titleFormatted": {
-        "en": "[[fuel]] price is !{{below|above}} [[price]]",
+        "en": "[[fuel]] price is !{{below|at or above}} [[price]]",
         "nl": "Prijs van [[fuel]] is !{{lager dan|hoger dan of gelijk aan}} [[price]]"
       },
       "args": [

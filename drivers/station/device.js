@@ -12,25 +12,27 @@ const LOOKUP_RADIUS_KM = 0.15;
 
 module.exports = class StationDevice extends Homey.Device {
 
-  async onAdded() {
-    this.log('[pair-debug] onAdded', this.getName());
-  }
-
   async onInit() {
-    this.log('[pair-debug] onInit', this.getName());
     this.timer = null;
+    this.deleted = false;
     this.reschedule();
-    // Not awaited: a slow first request must not keep the device (and the pairing screen) waiting.
-    this.refresh().catch(this.error);
+    // Respect auto_refresh=false on app restarts; a newly added device defaults to auto_refresh=true.
+    if (this.getSetting('auto_refresh') !== false) {
+      // Not awaited: a slow first request must not keep the device (and the pairing screen) waiting.
+      this.refresh().catch(this.error);
+    }
   }
 
-  reschedule() {
+  reschedule(settings = this.getSettings()) {
     if (this.timer) this.homey.clearInterval(this.timer);
     this.timer = null;
     this.intervalMinutes = null;
-    if (this.getSetting('auto_refresh') === false) return;
-    this.intervalMinutes = this.homey.app.effectiveInterval(this.getSetting('interval'));
-    this.timer = this.homey.setInterval(() => this.refresh(), this.intervalMinutes * 60 * 1000);
+    if (settings.auto_refresh === false) return;
+    this.intervalMinutes = this.homey.app.effectiveInterval(settings.interval);
+    this.timer = this.homey.setInterval(
+      () => this.refresh().catch(this.error),
+      this.intervalMinutes * 60 * 1000,
+    );
   }
 
   getScheduleInfo() {
@@ -38,30 +40,40 @@ module.exports = class StationDevice extends Homey.Device {
   }
 
   async onSettings({ newSettings, changedKeys }) {
-    const interval = newSettings.interval;
+    const interval = Number(newSettings.interval);
     if (interval > 0 && interval < 5) throw new Error(this.homey.__('error.interval'));
     if (changedKeys.includes('interval') || changedKeys.includes('auto_refresh')) {
-      // The new values are only readable through getSetting after this handler returns.
-      this.homey.setTimeout(() => this.reschedule(), 0);
+      // Use newSettings directly so we don't race against Homey persisting settings.
+      this.reschedule(newSettings);
     }
   }
 
-  async onDeleted() {
+  async onUninit() {
     if (this.timer) this.homey.clearInterval(this.timer);
+    this.timer = null;
+  }
+
+  async onDeleted() {
+    this.deleted = true;
+    if (this.timer) this.homey.clearInterval(this.timer);
+    this.timer = null;
   }
 
   async ensureCapability(id, options) {
-    if (!this.hasCapability(id)) await this.addCapability(id);
-    if (options) await this.setCapabilityOptions(id, options);
+    const added = !this.hasCapability(id);
+    if (added) await this.addCapability(id);
+    if (added && options) await this.setCapabilityOptions(id, options);
   }
 
   // The flow action passes throwOnError so a failed refresh shows up in the flow instead of only as a warning.
   async refresh({ throwOnError = false } = {}) {
+    if (this.deleted) return;
     const { lat, lon } = this.getStore();
     const { id } = this.getData();
     const started = Date.now();
     try {
       const stations = await fetchStations({ lat, lon, radiusKm: LOOKUP_RADIUS_KM });
+      if (this.deleted) return;
       const station = stations.find(s => s.id === id);
       if (!station) throw new Error('Station not found in ANWB data');
       await this.unsetWarning();
@@ -73,9 +85,10 @@ module.exports = class StationDevice extends Homey.Device {
         detail: `${Object.keys(station.prices).length} fuel prices`,
       });
     } catch (err) {
+      if (this.deleted) return;
       this.error('Refresh failed:', err.message);
       this.homey.app.logRefresh({ device: this.getName(), ok: false, ms: Date.now() - started, detail: err.message });
-      await this.setWarning(err.message);
+      await this.setWarning(err.message).catch(this.error);
       if (throwOnError) throw err;
     }
   }
@@ -131,6 +144,7 @@ module.exports = class StationDevice extends Homey.Device {
       await this.setCapabilityValue(`measure_fuel_price.${subId(f.type)}`, null).catch(this.error);
     }
 
+    await this.ensureCapability('fuel_station_address');
     await this.setCapabilityValue('fuel_station_address', station.address);
     await this.ensureCapability('fuel_last_update');
     await this.setCapabilityValue('fuel_last_update', formatStamp(new Date(), this.homey.clock.getTimezone()));

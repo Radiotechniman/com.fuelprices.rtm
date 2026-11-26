@@ -60,6 +60,20 @@
         return new Date(ms).toLocaleString(undefined, { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
       };
 
+      function renderLog(log) {
+        log = log || [];
+        var failed = log.filter(function (e) { return !e.ok; }).length;
+        var lastOk = log.filter(function (e) { return e.ok; }).pop();
+        document.getElementById('summary').textContent =
+          t('settings.last_ok') + ': ' + (lastOk ? stamp(lastOk.t) : '-') + ' · ' +
+          t('settings.errors') + ': ' + failed + '/' + log.length;
+        fill(document.getElementById('log'),
+          [t('settings.time'), t('settings.device'), t('settings.result'), t('settings.duration'), t('settings.info')],
+          log.slice().reverse().map(function (e) {
+            return row([stamp(e.t), e.device, e.ok ? 'OK' : t('settings.error'), (e.ms / 1000).toFixed(1) + ' s', e.detail || ''], e.ok ? '' : 'err');
+          }));
+      }
+
       function renderStatus() {
         Homey.api('GET', '/status', null, function (err, status) {
           if (err) return;
@@ -70,22 +84,7 @@
                 : d.intervalMinutes + ' min' + (d.custom ? ' (' + t('settings.own') + ')' : '');
               return row([d.name, text]);
             }));
-        });
-      }
-
-      function renderLog() {
-        Homey.get('log', function (err, log) {
-          log = log || [];
-          var failed = log.filter(function (e) { return !e.ok; }).length;
-          var lastOk = log.filter(function (e) { return e.ok; }).pop();
-          document.getElementById('summary').textContent =
-            t('settings.last_ok') + ': ' + (lastOk ? stamp(lastOk.t) : '-') + ' · ' +
-            t('settings.errors') + ': ' + failed + '/' + log.length;
-          fill(document.getElementById('log'),
-            [t('settings.time'), t('settings.device'), t('settings.result'), t('settings.duration'), t('settings.info')],
-            log.slice().reverse().map(function (e) {
-              return row([stamp(e.t), e.device, e.ok ? 'OK' : t('settings.error'), (e.ms / 1000).toFixed(1) + ' s', e.detail || ''], e.ok ? '' : 'err');
-            }));
+          renderLog(status.log);
         });
       }
 
@@ -94,18 +93,16 @@
         var saved = document.getElementById('saved');
         if (!(value >= 5 && value <= 1440)) { saved.textContent = t('settings.invalid'); saved.className = 'err'; return; }
         Homey.set('defaultInterval', value, function (err) {
-          saved.className = '';
+          saved.className = err ? 'err' : '';
           saved.textContent = err ? err.message : t('settings.saved');
           setTimeout(renderStatus, 500);
         });
       });
       document.getElementById('clear').addEventListener('click', function () {
-        Homey.set('log', [], renderLog);
+        Homey.api('DELETE', '/log', null, renderStatus);
       });
 
-      Homey.on('settings.set', function (key) { if (key === 'log') renderLog(); });
       renderStatus();
-      renderLog();
       Homey.ready();
     }
   </script>

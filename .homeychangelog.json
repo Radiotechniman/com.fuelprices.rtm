@@ -1,0 +1,10 @@
+{
+  "1.0.0": {
+    "en": "First publication",
+    "nl": "Eerste publicatie"
+  },
+  "1.0.1": {
+    "en": "Fixed automatic refresh still running when disabled, regenerated app and driver icons with the droplet design, improved opening hours (24/7 and overnight), moved activity log to memory, and added Homey Community forum link.",
+    "nl": "Opgelost dat automatisch verversen soms toch bleef draaien als dit uit stond, app- en driver-iconen opnieuw gegenereerd met de druppel, openingstijden verbeterd (24/7 en nachtelijk), activiteitenlog in geheugen verplaatst en link naar het Homey Community-forum toegevoegd."
+  }
+}

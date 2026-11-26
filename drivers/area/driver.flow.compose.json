@@ -169,7 +169,7 @@
         "nl": "Prijs is lager dan"
       },
       "titleFormatted": {
-        "en": "Price is !{{below|above}} [[price]]",
+        "en": "Price is !{{below|at or above}} [[price]]",
         "nl": "Prijs is !{{lager dan|hoger dan of gelijk aan}} [[price]]"
       },
       "args": [

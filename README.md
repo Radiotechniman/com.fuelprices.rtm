@@ -9,7 +9,7 @@ A [Homey](https://homey.app) app (SDK 3, `com.fuelprices.rtm`) that tracks fuel 
 ## Devices
 
 - **Fuel price (area)**: one device per fuel type (e.g. Euro 95 or Diesel) for an address and search radius. Shows the lowest price, the cheapest station with address and distance, the average price, the number of stations, the change over the last day and week, and the lowest and highest price ever seen.
-- **Fuel price (station)**: one device per station. Shows the price of every fuel it sells, the lowest and highest price ever seen per fuel, the address and, when known, whether it is open.
+- **Fuel station**: one device per station. Shows the price of every fuel it sells, the lowest and highest price ever seen per fuel, the address and, when known, whether it is open.
 
 Both device types come with Flow cards (price changed, price drops below a value, new lowest price ever, cheapest station changed, refresh data) and a configurable update interval. See [README.txt](README.txt) for the full list.
 
@@ -29,6 +29,10 @@ homey app install   # install on your Homey
 ## Data
 
 Prices and station information come from the ANWB fuel price service; addresses are looked up with the PDOK Locatieserver. Prices are not guaranteed to be up to date or correct, so check the price at the pump. This app is not made by or affiliated with ANWB.
+
+## Support & Community
+
+Questions, feedback or issues? Join the topic on the [Homey Community Forum](https://community.homey.app/t/app-pro-nl-brandstofprijzen/162606).
 
 ## Credits
 

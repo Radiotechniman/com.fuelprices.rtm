@@ -1,6 +1,6 @@
 {
   "id": "com.fuelprices.rtm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=12.4.0",
   "sdk": 3,
   "platforms": [
@@ -27,10 +27,15 @@
   "author": {
     "name": "radiotechniman"
   },
+  "homeyCommunityTopicId": 162606,
   "api": {
     "getStatus": {
       "method": "GET",
       "path": "/status"
+    },
+    "clearLog": {
+      "method": "DELETE",
+      "path": "/log"
     }
   }
 }
